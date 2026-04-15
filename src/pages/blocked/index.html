@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Site Blocked</title>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
+        <h1 data-i18n="blockedPageHeading">This site is blocked</h1>
+        <p class="description" data-i18n="blockedPageDescription">This website is blocked while focus mode is enabled.</p>
+        <div class="target">
+          <span data-i18n="blockedPageOriginalUrlLabel">Blocked URL</span>
+          <code id="blockedUrl">-</code>
+        </div>
+        <div class="actions">
+          <button id="openOptionsButton" class="button" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>

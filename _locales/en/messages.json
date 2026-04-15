@@ -1,0 +1,100 @@
+{
+  "appName": {
+    "message": "Focus Assistant"
+  },
+  "appDescription": {
+    "message": "A lightweight, privacy-friendly extension for blocking distracting websites."
+  },
+  "popupHeading": {
+    "message": "Website blocking"
+  },
+  "focusModeLabel": {
+    "message": "Focus mode"
+  },
+  "blockedDomainsLabel": {
+    "message": "Blocked domains"
+  },
+  "popupBlockedDomainsLabel": {
+    "message": "Active domains"
+  },
+  "manageBlockedSitesButton": {
+    "message": "Manage blocked sites"
+  },
+  "popupStatusEnabled": {
+    "message": "Focus mode is active, and enabled domains will be redirected."
+  },
+  "popupStatusDisabled": {
+    "message": "Blocking is paused."
+  },
+  "optionsPageTitle": {
+    "message": "Focus Assistant Settings"
+  },
+  "optionsHeading": {
+    "message": "Blocked websites"
+  },
+  "optionsDescription": {
+    "message": "Control each domain individually with a stable scrolling list and placeholder rows."
+  },
+  "addDomainButton": {
+    "message": "Add domain"
+  },
+  "removeDomainButton": {
+    "message": "Remove"
+  },
+  "newDomainPlaceholder": {
+    "message": "Enter a domain, for example youtube.com"
+  },
+  "domainListEnabledColumn": {
+    "message": "Enabled"
+  },
+  "domainListDomainColumn": {
+    "message": "Domain"
+  },
+  "domainListActionColumn": {
+    "message": "Action"
+  },
+  "blockedPageModeLabel": {
+    "message": "Blocked page target"
+  },
+  "blockedPageModeInternal": {
+    "message": "Use built-in blocked page"
+  },
+  "blockedPageModeExternal": {
+    "message": "Redirect to custom URL"
+  },
+  "blockedPageUrlLabel": {
+    "message": "Custom blocked page URL"
+  },
+  "blockedPageUrlPlaceholder": {
+    "message": "https://example.com/blocked or http://127.0.0.1:3000/blocked"
+  },
+  "saveSettingsButton": {
+    "message": "Save settings"
+  },
+  "settingsSavedMessage": {
+    "message": "Saved settings. $1 domain(s) are currently enabled.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "invalidDomainMessage": {
+    "message": "Please enter a valid domain."
+  },
+  "duplicateDomainMessage": {
+    "message": "That domain already exists."
+  },
+  "blockedPageTitle": {
+    "message": "Site blocked"
+  },
+  "blockedPageHeading": {
+    "message": "This site is blocked"
+  },
+  "blockedPageDescription": {
+    "message": "Focus mode is enabled, so matching websites are redirected here."
+  },
+  "blockedPageOriginalUrlLabel": {
+    "message": "Original URL"
+  }
+}

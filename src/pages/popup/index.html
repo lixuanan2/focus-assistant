@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Focus Assistant</title>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <main class="popup">
+      <section class="panel">
+        <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
+        <h1 data-i18n="popupHeading">Website blocking</h1>
+        <label class="toggle">
+          <span data-i18n="focusModeLabel">Focus mode</span>
+          <input id="enabledToggle" type="checkbox">
+        </label>
+        <p id="statusText" class="status"></p>
+        <div class="summary">
+          <span data-i18n="popupBlockedDomainsLabel">Active domains</span>
+          <strong id="blockedCount">0</strong>
+        </div>
+        <button id="openOptionsButton" class="button" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
+      </section>
+    </main>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>

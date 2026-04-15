@@ -1,0 +1,100 @@
+{
+  "appName": {
+    "message": "Focus Assistant"
+  },
+  "appDescription": {
+    "message": "一个轻量、注重隐私的分心网站屏蔽插件。"
+  },
+  "popupHeading": {
+    "message": "网站屏蔽"
+  },
+  "focusModeLabel": {
+    "message": "专注模式"
+  },
+  "blockedDomainsLabel": {
+    "message": "已屏蔽域名"
+  },
+  "popupBlockedDomainsLabel": {
+    "message": "已启用域名"
+  },
+  "manageBlockedSitesButton": {
+    "message": "管理屏蔽列表"
+  },
+  "popupStatusEnabled": {
+    "message": "当前已开启专注模式，启用中的域名会被拦截。"
+  },
+  "popupStatusDisabled": {
+    "message": "当前已暂停屏蔽。"
+  },
+  "optionsPageTitle": {
+    "message": "Focus Assistant 设置"
+  },
+  "optionsHeading": {
+    "message": "屏蔽网站"
+  },
+  "optionsDescription": {
+    "message": "每个域名单独控制开关，列表支持滚动，空白占位行会保持布局稳定。"
+  },
+  "addDomainButton": {
+    "message": "添加域名"
+  },
+  "removeDomainButton": {
+    "message": "移除"
+  },
+  "newDomainPlaceholder": {
+    "message": "输入域名，例如 youtube.com"
+  },
+  "domainListEnabledColumn": {
+    "message": "启用"
+  },
+  "domainListDomainColumn": {
+    "message": "域名"
+  },
+  "domainListActionColumn": {
+    "message": "操作"
+  },
+  "blockedPageModeLabel": {
+    "message": "拦截后的跳转目标"
+  },
+  "blockedPageModeInternal": {
+    "message": "使用插件内置 blocked 页面"
+  },
+  "blockedPageModeExternal": {
+    "message": "跳转到自定义 URL"
+  },
+  "blockedPageUrlLabel": {
+    "message": "自定义 blocked 页面 URL"
+  },
+  "blockedPageUrlPlaceholder": {
+    "message": "https://example.com/blocked 或 http://127.0.0.1:3000/blocked"
+  },
+  "saveSettingsButton": {
+    "message": "保存设置"
+  },
+  "settingsSavedMessage": {
+    "message": "已保存，当前有 $1 个启用中的域名。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "invalidDomainMessage": {
+    "message": "请输入有效域名。"
+  },
+  "duplicateDomainMessage": {
+    "message": "这个域名已经存在。"
+  },
+  "blockedPageTitle": {
+    "message": "网站已被屏蔽"
+  },
+  "blockedPageHeading": {
+    "message": "当前网站已被屏蔽"
+  },
+  "blockedPageDescription": {
+    "message": "你当前处于专注模式，命中的网站会被重定向到这个页面。"
+  },
+  "blockedPageOriginalUrlLabel": {
+    "message": "原始网址"
+  }
+}
