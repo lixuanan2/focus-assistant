@@ -29,7 +29,7 @@ export function normalizeBlockedSiteEntry(item) {
   if (typeof item === "string") {
     const domain = normalizeDomain(item);
 
-    return domain ? { domain, enabled: true } : null;
+    return domain ? { domain, enabled: true, groupId: "" } : null;
   }
 
   if (!item || typeof item !== "object") {
@@ -44,7 +44,8 @@ export function normalizeBlockedSiteEntry(item) {
 
   return {
     domain,
-    enabled: typeof item.enabled === "boolean" ? item.enabled : true
+    enabled: typeof item.enabled === "boolean" ? item.enabled : true,
+    groupId: typeof item.groupId === "string" ? item.groupId.trim() : ""
   };
 }
 

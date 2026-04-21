@@ -6,10 +6,10 @@
     "message": "一个轻量、注重隐私的分心网站屏蔽插件。"
   },
   "popupHeading": {
-    "message": "网站屏蔽"
+    "message": "专注概览"
   },
   "focusModeLabel": {
-    "message": "专注模式"
+    "message": "手动专注模式"
   },
   "blockedDomainsLabel": {
     "message": "已屏蔽域名"
@@ -18,22 +18,218 @@
     "message": "已启用域名"
   },
   "manageBlockedSitesButton": {
-    "message": "管理屏蔽列表"
+    "message": "管理设置"
   },
   "popupStatusEnabled": {
-    "message": "当前已开启专注模式，启用中的域名会被拦截。"
+    "message": "当前存在生效中的专注模式，启用域名会被拦截。"
   },
   "popupStatusDisabled": {
-    "message": "当前已暂停屏蔽。"
+    "message": "当前没有生效中的专注模式。"
+  },
+  "popupScheduleActive": {
+    "message": "进行中"
+  },
+  "popupScheduleReady": {
+    "message": "已开启"
+  },
+  "popupScheduleOff": {
+    "message": "未开启"
+  },
+  "popupPomodoroHeading": {
+    "message": "番茄钟"
+  },
+  "popupPomodoroIdle": {
+    "message": "还没有临时冲刺会话。"
+  },
+  "popupPomodoroFocus": {
+    "message": "当前为专注阶段，剩余 $1。",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPomodoroBreak": {
+    "message": "当前为休息阶段，剩余 $1。",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "startPomodoroButton": {
+    "message": "开始专注冲刺"
+  },
+  "stopPomodoroButton": {
+    "message": "停止"
+  },
+  "pomodoroPhaseIdle": {
+    "message": "空闲"
+  },
+  "pomodoroPhaseFocus": {
+    "message": "专注"
+  },
+  "pomodoroPhaseBreak": {
+    "message": "休息"
   },
   "optionsPageTitle": {
     "message": "Focus Assistant 设置"
   },
   "optionsHeading": {
-    "message": "屏蔽网站"
+    "message": "专注设置"
+  },
+  "navModes": {
+    "message": "专注模式"
+  },
+  "navRecovery": {
+    "message": "恢复机制"
+  },
+  "navBlockedPage": {
+    "message": "拦截页面"
+  },
+  "navDomains": {
+    "message": "域名与分组"
   },
   "optionsDescription": {
-    "message": "每个域名单独控制开关，列表支持滚动，空白占位行会保持布局稳定。"
+    "message": "用分组把域名按场景拆开，再给每个组绑定不同的专注模式。"
+  },
+  "optionsSectionModes": {
+    "message": "专注模式"
+  },
+  "optionsSectionModesDescription": {
+    "message": "保留手动模式作为兜底，但尽量让定时模式和番茄钟替你做决定。"
+  },
+  "scheduleModeLabel": {
+    "message": "定时专注模式"
+  },
+  "scheduleMorningLabel": {
+    "message": "工作日上午"
+  },
+  "scheduleAfternoonLabel": {
+    "message": "工作日下午"
+  },
+  "timeRangeSeparator": {
+    "message": "到"
+  },
+  "optionsSectionPomodoro": {
+    "message": "番茄钟"
+  },
+  "optionsSectionPomodoroDescription": {
+    "message": "把番茄钟当成临时冲刺模式，不要替代你的默认定时规则。"
+  },
+  "pomodoroWorkMinutesLabel": {
+    "message": "专注时长（分钟）"
+  },
+  "pomodoroBreakMinutesLabel": {
+    "message": "休息时长（分钟）"
+  },
+  "optionsSectionRecovery": {
+    "message": "恢复页"
+  },
+  "optionsSectionRecoveryDescription": {
+    "message": "被拦截后，页面应该把你拉回来，而不是只说“不许进”。"
+  },
+  "focusTaskLabel": {
+    "message": "当前最重要的任务"
+  },
+  "fallbackActionLabel": {
+    "message": "最小替代动作"
+  },
+  "bypassDefaultDurationLabel": {
+    "message": "默认临时放行时长（分钟）"
+  },
+  "optionsSectionBlockedPage": {
+    "message": "拦截落地页"
+  },
+  "optionsSectionBlockedPageDescription": {
+    "message": "如果你想启用恢复提示和摩擦机制，建议继续使用内置页面。"
+  },
+  "optionsSectionDomains": {
+    "message": "域名列表"
+  },
+  "optionsSectionDomainsDescription": {
+    "message": "先按分组管理，再在当前组详情里维护名称、生效模式和域名。"
+  },
+  "groupListLabel": {
+    "message": "域名分组"
+  },
+  "groupNameColumn": {
+    "message": "分组名"
+  },
+  "groupCountColumn": {
+    "message": "数量"
+  },
+  "groupModesColumn": {
+    "message": "生效模式"
+  },
+  "groupActionColumn": {
+    "message": "操作"
+  },
+  "addGroupButton": {
+    "message": "添加分组"
+  },
+  "removeGroupButton": {
+    "message": "删除组"
+  },
+  "newGroupPlaceholder": {
+    "message": "输入分组名，例如 娱乐站点"
+  },
+  "groupModeManual": {
+    "message": "手动"
+  },
+  "groupModeSchedule": {
+    "message": "定时"
+  },
+  "groupModePomodoro": {
+    "message": "番茄钟"
+  },
+  "groupModesNone": {
+    "message": "未启用"
+  },
+  "invalidGroupMessage": {
+    "message": "请输入有效分组名。"
+  },
+  "duplicateGroupMessage": {
+    "message": "这个分组已经存在。"
+  },
+  "groupDetailNameLabel": {
+    "message": "分组名称"
+  },
+  "groupDetailModesLabel": {
+    "message": "生效模式"
+  },
+  "groupDetailMeta": {
+    "message": "当前组包含 $1 个域名。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupBackButton": {
+    "message": "返回分组列表"
+  },
+  "groupPreviewLabel": {
+    "message": "组内域名预览"
+  },
+  "groupPreviewEmpty": {
+    "message": "这个组还没有域名。"
+  },
+  "groupPreviewMore": {
+    "message": "还有 $1 个域名",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "emptyGroupMessage": {
+    "message": "“$1” 还是空组，现在可以开始往里面添加域名。",
+    "placeholders": {
+      "group": {
+        "content": "$1"
+      }
+    }
   },
   "addDomainButton": {
     "message": "添加域名"
@@ -54,6 +250,9 @@
     "message": "操作"
   },
   "blockedPageModeLabel": {
+    "message": "当前模式"
+  },
+  "blockedPageTargetLabel": {
     "message": "拦截后的跳转目标"
   },
   "blockedPageModeInternal": {
@@ -70,6 +269,9 @@
   },
   "saveSettingsButton": {
     "message": "保存设置"
+  },
+  "unsavedChangesHint": {
+    "message": "当前有未保存修改，保存后才会生效。"
   },
   "settingsSavedMessage": {
     "message": "已保存，当前有 $1 个启用中的域名。",
@@ -92,9 +294,90 @@
     "message": "当前网站已被屏蔽"
   },
   "blockedPageDescription": {
-    "message": "你当前处于专注模式，命中的网站会被重定向到这个页面。"
+    "message": "你当前处于专注阶段，命中的网站会被重定向到这个恢复页。"
   },
   "blockedPageOriginalUrlLabel": {
     "message": "原始网址"
+  },
+  "blockedPageRecoveryHeading": {
+    "message": "先把注意力拉回来"
+  },
+  "blockedPageRecoveryDescription": {
+    "message": "先做一个很小的恢复动作，再决定你是不是真的需要这个网站。"
+  },
+  "blockedPageReasonLabel": {
+    "message": "你现在为什么想打开它？"
+  },
+  "blockedPageReasonPlaceholder": {
+    "message": "先选一个原因"
+  },
+  "blockedPageNoteLabel": {
+    "message": "补充说明"
+  },
+  "blockedPageNotePlaceholder": {
+    "message": "可选：写一句你现在卡住的地方"
+  },
+  "blockedPageResetButton": {
+    "message": "先做 2 分钟恢复"
+  },
+  "blockedPageResetRunning": {
+    "message": "恢复计时中：$1",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageResetComplete": {
+    "message": "2 分钟恢复已结束。现在再判断一次，你真的需要打开它吗？"
+  },
+  "blockedPageBypassHeading": {
+    "message": "临时放行"
+  },
+  "blockedPageBypassDescription": {
+    "message": "为了避免冲动打开，先选理由，再等待一小段时间，然后只放行很短一会儿。"
+  },
+  "blockedPageBypassDurationLabel": {
+    "message": "放行时长"
+  },
+  "blockedPageStartCountdownButton": {
+    "message": "开始 15 秒放行倒计时"
+  },
+  "blockedPageBypassCountdown": {
+    "message": "倒计时中：$1 秒",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageBypassCountdownHint": {
+    "message": "如果只是冲动，这 15 秒应该足够让你重新判断。"
+  },
+  "blockedPageUnlockNowButton": {
+    "message": "立即放行 $1 分钟",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageBypassReady": {
+    "message": "倒计时完成。只有这次短暂放行，不会永久关闭规则。"
+  },
+  "blockedPageReasonRequired": {
+    "message": "先选一个原因，或者补一句说明。"
+  },
+  "focusSourceManual": {
+    "message": "手动专注模式"
+  },
+  "focusSourceSchedule": {
+    "message": "定时专注模式"
+  },
+  "focusSourcePomodoro": {
+    "message": "番茄钟专注模式"
+  },
+  "focusSourceUnknown": {
+    "message": "专注模式"
   }
 }

@@ -6,10 +6,10 @@
     "message": "A lightweight, privacy-friendly extension for blocking distracting websites."
   },
   "popupHeading": {
-    "message": "Website blocking"
+    "message": "Focus overview"
   },
   "focusModeLabel": {
-    "message": "Focus mode"
+    "message": "Manual focus mode"
   },
   "blockedDomainsLabel": {
     "message": "Blocked domains"
@@ -18,22 +18,218 @@
     "message": "Active domains"
   },
   "manageBlockedSitesButton": {
-    "message": "Manage blocked sites"
+    "message": "Manage settings"
   },
   "popupStatusEnabled": {
-    "message": "Focus mode is active, and enabled domains will be redirected."
+    "message": "At least one focus mode is active, so enabled domains will be blocked."
   },
   "popupStatusDisabled": {
-    "message": "Blocking is paused."
+    "message": "No focus mode is currently active."
+  },
+  "popupScheduleActive": {
+    "message": "Active"
+  },
+  "popupScheduleReady": {
+    "message": "On"
+  },
+  "popupScheduleOff": {
+    "message": "Off"
+  },
+  "popupPomodoroHeading": {
+    "message": "Pomodoro"
+  },
+  "popupPomodoroIdle": {
+    "message": "No temporary sprint is running."
+  },
+  "popupPomodoroFocus": {
+    "message": "Focus phase is running with $1 remaining.",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPomodoroBreak": {
+    "message": "Break phase is running with $1 remaining.",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "startPomodoroButton": {
+    "message": "Start focus sprint"
+  },
+  "stopPomodoroButton": {
+    "message": "Stop"
+  },
+  "pomodoroPhaseIdle": {
+    "message": "Idle"
+  },
+  "pomodoroPhaseFocus": {
+    "message": "Focus"
+  },
+  "pomodoroPhaseBreak": {
+    "message": "Break"
   },
   "optionsPageTitle": {
     "message": "Focus Assistant Settings"
   },
   "optionsHeading": {
-    "message": "Blocked websites"
+    "message": "Focus settings"
+  },
+  "navModes": {
+    "message": "Focus modes"
+  },
+  "navRecovery": {
+    "message": "Recovery"
+  },
+  "navBlockedPage": {
+    "message": "Blocked page"
+  },
+  "navDomains": {
+    "message": "Domains & groups"
   },
   "optionsDescription": {
-    "message": "Control each domain individually with a stable scrolling list and placeholder rows."
+    "message": "Organize domains into groups, then bind each group to the focus modes where it should apply."
+  },
+  "optionsSectionModes": {
+    "message": "Focus modes"
+  },
+  "optionsSectionModesDescription": {
+    "message": "Keep manual mode as a fallback, but let scheduled focus and pomodoro carry most of the work."
+  },
+  "scheduleModeLabel": {
+    "message": "Scheduled focus mode"
+  },
+  "scheduleMorningLabel": {
+    "message": "Weekday morning"
+  },
+  "scheduleAfternoonLabel": {
+    "message": "Weekday afternoon"
+  },
+  "timeRangeSeparator": {
+    "message": "to"
+  },
+  "optionsSectionPomodoro": {
+    "message": "Pomodoro"
+  },
+  "optionsSectionPomodoroDescription": {
+    "message": "Use pomodoro as a temporary sprint mode instead of replacing your default schedule."
+  },
+  "pomodoroWorkMinutesLabel": {
+    "message": "Focus minutes"
+  },
+  "pomodoroBreakMinutesLabel": {
+    "message": "Break minutes"
+  },
+  "optionsSectionRecovery": {
+    "message": "Recovery page"
+  },
+  "optionsSectionRecoveryDescription": {
+    "message": "The blocked page should help you recover, not just say no."
+  },
+  "focusTaskLabel": {
+    "message": "Current focus task"
+  },
+  "fallbackActionLabel": {
+    "message": "Smallest fallback action"
+  },
+  "bypassDefaultDurationLabel": {
+    "message": "Default bypass duration (minutes)"
+  },
+  "optionsSectionBlockedPage": {
+    "message": "Blocked page target"
+  },
+  "optionsSectionBlockedPageDescription": {
+    "message": "Use the built-in page if you want recovery prompts and friction."
+  },
+  "optionsSectionDomains": {
+    "message": "Blocked domains"
+  },
+  "optionsSectionDomainsDescription": {
+    "message": "Manage domains by group first, then edit the selected group's name, active modes, and domains below."
+  },
+  "groupListLabel": {
+    "message": "Domain groups"
+  },
+  "groupNameColumn": {
+    "message": "Group"
+  },
+  "groupCountColumn": {
+    "message": "Count"
+  },
+  "groupModesColumn": {
+    "message": "Active modes"
+  },
+  "groupActionColumn": {
+    "message": "Action"
+  },
+  "addGroupButton": {
+    "message": "Add group"
+  },
+  "removeGroupButton": {
+    "message": "Remove group"
+  },
+  "newGroupPlaceholder": {
+    "message": "Enter a group name, for example Entertainment"
+  },
+  "groupModeManual": {
+    "message": "Manual"
+  },
+  "groupModeSchedule": {
+    "message": "Schedule"
+  },
+  "groupModePomodoro": {
+    "message": "Pomodoro"
+  },
+  "groupModesNone": {
+    "message": "Off"
+  },
+  "invalidGroupMessage": {
+    "message": "Please enter a valid group name."
+  },
+  "duplicateGroupMessage": {
+    "message": "That group already exists."
+  },
+  "groupDetailNameLabel": {
+    "message": "Group name"
+  },
+  "groupDetailModesLabel": {
+    "message": "Active modes"
+  },
+  "groupDetailMeta": {
+    "message": "This group contains $1 domain(s).",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "groupBackButton": {
+    "message": "Back to groups"
+  },
+  "groupPreviewLabel": {
+    "message": "Domain preview"
+  },
+  "groupPreviewEmpty": {
+    "message": "This group has no domains yet."
+  },
+  "groupPreviewMore": {
+    "message": "$1 more domain(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "emptyGroupMessage": {
+    "message": "\"$1\" is still empty. Start by adding domains to this group.",
+    "placeholders": {
+      "group": {
+        "content": "$1"
+      }
+    }
   },
   "addDomainButton": {
     "message": "Add domain"
@@ -54,6 +250,9 @@
     "message": "Action"
   },
   "blockedPageModeLabel": {
+    "message": "Active mode"
+  },
+  "blockedPageTargetLabel": {
     "message": "Blocked page target"
   },
   "blockedPageModeInternal": {
@@ -71,8 +270,11 @@
   "saveSettingsButton": {
     "message": "Save settings"
   },
+  "unsavedChangesHint": {
+    "message": "You have unsaved changes. Save to apply them."
+  },
   "settingsSavedMessage": {
-    "message": "Saved settings. $1 domain(s) are currently enabled.",
+    "message": "Saved. $1 domain(s) are currently enabled.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -92,9 +294,90 @@
     "message": "This site is blocked"
   },
   "blockedPageDescription": {
-    "message": "Focus mode is enabled, so matching websites are redirected here."
+    "message": "A focus mode is currently active, so matching sites are redirected to this recovery page."
   },
   "blockedPageOriginalUrlLabel": {
     "message": "Original URL"
+  },
+  "blockedPageRecoveryHeading": {
+    "message": "Recover focus first"
+  },
+  "blockedPageRecoveryDescription": {
+    "message": "Use a small reset first, then decide whether you still need the site."
+  },
+  "blockedPageReasonLabel": {
+    "message": "Why do you want to open it right now?"
+  },
+  "blockedPageReasonPlaceholder": {
+    "message": "Choose a reason first"
+  },
+  "blockedPageNoteLabel": {
+    "message": "Extra note"
+  },
+  "blockedPageNotePlaceholder": {
+    "message": "Optional: write one line about what you are stuck on"
+  },
+  "blockedPageResetButton": {
+    "message": "Do a 2-minute reset first"
+  },
+  "blockedPageResetRunning": {
+    "message": "Reset timer: $1",
+    "placeholders": {
+      "remaining": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageResetComplete": {
+    "message": "The 2-minute reset is done. Decide again: do you still need this site?"
+  },
+  "blockedPageBypassHeading": {
+    "message": "Temporary bypass"
+  },
+  "blockedPageBypassDescription": {
+    "message": "Make impulse harder: choose a reason, wait, then unlock briefly."
+  },
+  "blockedPageBypassDurationLabel": {
+    "message": "Bypass duration"
+  },
+  "blockedPageStartCountdownButton": {
+    "message": "Start 15-second bypass countdown"
+  },
+  "blockedPageBypassCountdown": {
+    "message": "Countdown: $1s",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageBypassCountdownHint": {
+    "message": "If this was only impulse, 15 seconds should be enough to notice it."
+  },
+  "blockedPageUnlockNowButton": {
+    "message": "Unlock for $1 minute(s) now",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageBypassReady": {
+    "message": "Countdown finished. This only unlocks the site briefly."
+  },
+  "blockedPageReasonRequired": {
+    "message": "Choose a reason or add a note first."
+  },
+  "focusSourceManual": {
+    "message": "Manual focus mode"
+  },
+  "focusSourceSchedule": {
+    "message": "Scheduled focus mode"
+  },
+  "focusSourcePomodoro": {
+    "message": "Pomodoro focus mode"
+  },
+  "focusSourceUnknown": {
+    "message": "Focus mode"
   }
 }

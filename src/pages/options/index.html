@@ -10,54 +10,202 @@
     <main class="page">
       <section class="hero">
         <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
-        <h1 data-i18n="optionsHeading">Blocked websites</h1>
-        <p class="description" data-i18n="optionsDescription">Manage domains with per-site switches and a stable scrolling list.</p>
+        <h1 data-i18n="optionsHeading">Focus settings</h1>
+        <p class="description" data-i18n="optionsDescription">Use scheduled focus for default structure, pomodoro for temporary sprints, and keep blocked domains under tighter control.</p>
       </section>
 
-      <section class="card">
-        <form id="settingsForm">
-          <label class="field">
-            <span data-i18n="focusModeLabel">Focus mode</span>
-            <input id="enabledInput" type="checkbox">
-          </label>
+      <section class="workspace">
+        <aside class="settings-nav">
+          <button class="nav-item is-active" type="button" data-nav-target="modes" data-i18n="navModes">Focus modes</button>
+          <button class="nav-item" type="button" data-nav-target="recovery" data-i18n="navRecovery">Recovery</button>
+          <button class="nav-item" type="button" data-nav-target="blocked-page" data-i18n="navBlockedPage">Blocked page</button>
+          <button class="nav-item" type="button" data-nav-target="domains" data-i18n="navDomains">Domains</button>
+        </aside>
 
-          <label class="field field-stack" for="blockedPageModeInput">
-            <span data-i18n="blockedPageModeLabel">Blocked page target</span>
-            <select id="blockedPageModeInput">
-              <option value="internal" data-i18n="blockedPageModeInternal">Use built-in blocked page</option>
-              <option value="external" data-i18n="blockedPageModeExternal">Redirect to custom URL</option>
-            </select>
-          </label>
-
-          <label id="blockedPageUrlField" class="field field-stack" for="blockedPageUrlInput">
-            <span data-i18n="blockedPageUrlLabel">Custom blocked page URL</span>
-            <input id="blockedPageUrlInput" type="url" inputmode="url" spellcheck="false">
-          </label>
-
-          <section class="field field-stack">
-            <div class="field-header">
-              <span data-i18n="blockedDomainsLabel">Blocked domains</span>
-              <span id="domainCount" class="field-meta">0 / 0</span>
-            </div>
-            <div class="domain-add">
-              <input id="newDomainInput" type="text" inputmode="url" spellcheck="false">
-              <button id="addDomainButton" class="button button-secondary" type="button" data-i18n="addDomainButton">Add domain</button>
-            </div>
-            <div class="domain-list-shell">
-              <div class="domain-list-header" role="presentation">
-                <span data-i18n="domainListEnabledColumn">Enabled</span>
-                <span data-i18n="domainListDomainColumn">Domain</span>
-                <span data-i18n="domainListActionColumn">Action</span>
+        <section class="card">
+          <form id="settingsForm">
+            <section class="section" data-panel="modes">
+              <div class="section-badge" data-i18n="navModes">Focus modes</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionModes">Focus modes</h2>
+                <p data-i18n="optionsSectionModesDescription">Keep manual mode as a fallback, then let scheduled mode and pomodoro do most of the work.</p>
               </div>
-              <div id="domainList" class="domain-list" role="list"></div>
-            </div>
-          </section>
 
-          <div class="actions">
-            <button class="button" type="submit" data-i18n="saveSettingsButton">Save settings</button>
-            <span id="feedback" class="feedback" aria-live="polite"></span>
-          </div>
-        </form>
+              <label class="field">
+                <span data-i18n="focusModeLabel">Manual focus mode</span>
+                <input id="enabledInput" type="checkbox">
+              </label>
+
+              <label class="field">
+                <span data-i18n="scheduleModeLabel">Scheduled focus mode</span>
+                <input id="scheduleEnabledInput" type="checkbox">
+              </label>
+
+              <div class="schedule-grid">
+                <label class="field field-stack" for="scheduleMorningStartInput">
+                  <span data-i18n="scheduleMorningLabel">Weekday morning</span>
+                  <div class="time-range">
+                    <input id="scheduleMorningStartInput" type="time">
+                    <span data-i18n="timeRangeSeparator">to</span>
+                    <input id="scheduleMorningEndInput" type="time">
+                  </div>
+                </label>
+
+                <label class="field field-stack" for="scheduleAfternoonStartInput">
+                  <span data-i18n="scheduleAfternoonLabel">Weekday afternoon</span>
+                  <div class="time-range">
+                    <input id="scheduleAfternoonStartInput" type="time">
+                    <span data-i18n="timeRangeSeparator">to</span>
+                    <input id="scheduleAfternoonEndInput" type="time">
+                  </div>
+                </label>
+              </div>
+            </section>
+
+            <section class="section" data-panel="modes">
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionPomodoro">Pomodoro</h2>
+                <p data-i18n="optionsSectionPomodoroDescription">Use pomodoro as a temporary sprint mode without changing your default schedule.</p>
+              </div>
+
+              <div class="number-grid">
+                <label class="field field-stack" for="pomodoroWorkMinutesInput">
+                  <span data-i18n="pomodoroWorkMinutesLabel">Focus minutes</span>
+                  <input id="pomodoroWorkMinutesInput" type="number" min="5" max="180" step="1">
+                </label>
+
+                <label class="field field-stack" for="pomodoroBreakMinutesInput">
+                  <span data-i18n="pomodoroBreakMinutesLabel">Break minutes</span>
+                  <input id="pomodoroBreakMinutesInput" type="number" min="1" max="60" step="1">
+                </label>
+              </div>
+            </section>
+
+            <section class="section" data-panel="recovery">
+              <div class="section-badge" data-i18n="navRecovery">Recovery</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionRecovery">Recovery page</h2>
+                <p data-i18n="optionsSectionRecoveryDescription">The blocked page should help you recover, not just stop you.</p>
+              </div>
+
+              <label class="field field-stack" for="focusTaskInput">
+                <span data-i18n="focusTaskLabel">Current focus task</span>
+                <input id="focusTaskInput" type="text" spellcheck="false">
+              </label>
+
+              <label class="field field-stack" for="fallbackActionInput">
+                <span data-i18n="fallbackActionLabel">Smallest fallback action</span>
+                <input id="fallbackActionInput" type="text" spellcheck="false">
+              </label>
+
+              <label class="field field-stack" for="bypassDefaultDurationInput">
+                <span data-i18n="bypassDefaultDurationLabel">Default bypass duration (minutes)</span>
+                <input id="bypassDefaultDurationInput" type="number" min="1" max="30" step="1">
+              </label>
+            </section>
+
+            <section class="section" data-panel="blocked-page">
+              <div class="section-badge" data-i18n="navBlockedPage">Blocked page</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionBlockedPage">Blocked page target</h2>
+                <p data-i18n="optionsSectionBlockedPageDescription">The internal page is recommended if you want recovery prompts and friction.</p>
+              </div>
+
+              <label class="field field-stack" for="blockedPageModeInput">
+                <span data-i18n="blockedPageTargetLabel">Blocked page target</span>
+                <select id="blockedPageModeInput">
+                  <option value="internal" data-i18n="blockedPageModeInternal">Use built-in blocked page</option>
+                  <option value="external" data-i18n="blockedPageModeExternal">Redirect to custom URL</option>
+                </select>
+              </label>
+
+              <label id="blockedPageUrlField" class="field field-stack" for="blockedPageUrlInput">
+                <span data-i18n="blockedPageUrlLabel">Custom blocked page URL</span>
+                <input id="blockedPageUrlInput" type="url" inputmode="url" spellcheck="false">
+              </label>
+            </section>
+
+            <section class="section" data-panel="domains">
+              <div class="section-badge" data-i18n="navDomains">Domains</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionDomains">Blocked domains</h2>
+                <p data-i18n="optionsSectionDomainsDescription">Each domain can be enabled or disabled separately while the layout stays stable.</p>
+              </div>
+
+              <div id="groupOverviewPage" class="domains-view">
+                <div class="group-panel">
+                  <div class="field-header">
+                    <span data-i18n="groupListLabel">Domain groups</span>
+                    <span id="groupCount" class="field-meta">0</span>
+                  </div>
+
+                  <div class="group-add">
+                    <input id="newGroupInput" type="text" spellcheck="false">
+                    <button id="addGroupButton" class="button button-secondary" type="button" data-i18n="addGroupButton">Add group</button>
+                  </div>
+
+                  <div class="group-list-shell">
+                    <div class="group-list-header" role="presentation">
+                      <span data-i18n="groupNameColumn">Group</span>
+                      <span data-i18n="groupCountColumn">Count</span>
+                      <span data-i18n="groupModesColumn">Modes</span>
+                      <span data-i18n="groupActionColumn">Action</span>
+                    </div>
+                    <div id="groupList" class="group-list" role="list"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="groupDetailPage" class="domains-view" hidden>
+                <div class="field-header">
+                  <button id="groupBackButton" class="ghost-button" type="button" data-i18n="groupBackButton">Back to groups</button>
+                  <span id="domainCount" class="field-meta">0 / 0</span>
+                </div>
+
+                <div class="group-detail-shell">
+                  <div class="group-detail-header">
+                    <div>
+                      <div id="selectedGroupLabel" class="group-detail-page-title" data-i18n="blockedDomainsLabel">Blocked domains</div>
+                      <p id="selectedGroupMeta" class="group-detail-meta"></p>
+                    </div>
+                  </div>
+
+                  <div class="group-detail-grid">
+                    <label class="field field-stack" for="selectedGroupNameInput">
+                      <span data-i18n="groupDetailNameLabel">Group name</span>
+                      <input id="selectedGroupNameInput" type="text" spellcheck="false">
+                    </label>
+
+                    <div class="field field-stack">
+                      <span data-i18n="groupDetailModesLabel">Active modes</span>
+                      <div id="selectedGroupModes" class="group-detail-modes" role="group" aria-label="Group modes"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="domain-add">
+                    <input id="newDomainInput" type="text" inputmode="url" spellcheck="false">
+                    <button id="addDomainButton" class="button button-secondary" type="button" data-i18n="addDomainButton">Add domain</button>
+                </div>
+
+                <div class="domain-list-shell">
+                  <div class="domain-list-header" role="presentation">
+                    <span data-i18n="domainListEnabledColumn">Enabled</span>
+                    <span data-i18n="domainListDomainColumn">Domain</span>
+                    <span data-i18n="domainListActionColumn">Action</span>
+                  </div>
+                  <div id="domainList" class="domain-list" role="list"></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="actions">
+              <button class="button" type="submit" data-i18n="saveSettingsButton">Save settings</button>
+              <span id="dirtyHint" class="dirty-hint" data-i18n="unsavedChangesHint" hidden>Unsaved changes. Save to apply them.</span>
+              <span id="feedback" class="feedback" aria-live="polite"></span>
+            </div>
+          </form>
+        </section>
       </section>
     </main>
     <script type="module" src="./index.js"></script>

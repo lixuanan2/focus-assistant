@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 340px;
 }
 
 .popup {
@@ -31,9 +31,18 @@ body {
   text-transform: uppercase;
 }
 
+h1,
+h2 {
+  margin: 0;
+}
+
 h1 {
-  margin: 0 0 16px;
+  margin-bottom: 16px;
   font-size: 20px;
+}
+
+h2 {
+  font-size: 16px;
 }
 
 .toggle,
@@ -59,11 +68,60 @@ h1 {
   font-size: 14px;
 }
 
-.summary {
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   margin-bottom: 16px;
+}
+
+.summary {
   padding: 12px;
   border-radius: 10px;
   background: #f8f5ee;
+  gap: 12px;
+}
+
+.stack {
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid #e4dccf;
+  border-radius: 12px;
+  background: #fffaf2;
+}
+
+.stack-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.subtle {
+  margin: 0 0 12px;
+  color: #52606d;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 74px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ece5d8;
+  color: #7c5e10;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.actions-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .button {
@@ -79,4 +137,20 @@ h1 {
 
 .button:hover {
   background: #1857b7;
+}
+
+.button-secondary {
+  background: #0f766e;
+}
+
+.button-secondary:hover {
+  background: #0b5f59;
+}
+
+.button-muted {
+  background: #7c5e10;
+}
+
+.button-muted:hover {
+  background: #674d0d;
 }

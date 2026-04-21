@@ -1,51 +1,31 @@
-import { buildRedirectUrl, redirectMatchingTabs, shouldRedirectUrl } from "../core/blocking/redirect.js";
-import { DEFAULT_SETTINGS } from "../core/settings/defaults.js";
-import { getSettings, saveSettings } from "../core/settings/storage.js";
+import { createBackgroundController } from "./controller.js";
 
-let currentSettings = DEFAULT_SETTINGS;
-const settingsReady = loadCurrentSettings();
+const controller = createBackgroundController();
 
-async function loadCurrentSettings() {
-  currentSettings = await getSettings();
-  return currentSettings;
-}
-
-chrome.runtime.onInstalled.addListener(async () => {
-  const settings = await loadCurrentSettings();
-  const merged = {
-    ...DEFAULT_SETTINGS,
-    ...settings
-  };
-
-  currentSettings = await saveSettings(merged);
+chrome.runtime.onInstalled.addListener(() => {
+  void controller.handleInstalled();
 });
 
-chrome.runtime.onStartup.addListener(async () => {
-  await loadCurrentSettings();
+chrome.runtime.onStartup.addListener(() => {
+  void controller.loadState();
 });
 
-chrome.storage.onChanged.addListener(async (changes, areaName) => {
-  if (areaName !== "local" || !changes.focusSettings) {
-    return;
-  }
-
-  currentSettings = changes.focusSettings.newValue;
-  await redirectMatchingTabs(currentSettings);
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  void controller.handleStorageChanged(changes, areaName);
 });
 
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  await settingsReady;
-  const candidateUrl = changeInfo.url || tab.url;
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  void controller.handleTabUpdated(tabId, changeInfo, tab);
+});
 
-  if (!candidateUrl || !shouldRedirectUrl(candidateUrl, currentSettings)) {
-    return;
-  }
+chrome.alarms.onAlarm.addListener((alarm) => {
+  void controller.handleAlarm(alarm);
+});
 
-  const redirectUrl = buildRedirectUrl(candidateUrl, currentSettings);
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  void controller.handleMessage(message)
+    .then((result) => sendResponse({ ok: true, result }))
+    .catch((error) => sendResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }));
 
-  if (!redirectUrl || candidateUrl === redirectUrl) {
-    return;
-  }
-
-  await chrome.tabs.update(tabId, { url: redirectUrl });
+  return true;
 });

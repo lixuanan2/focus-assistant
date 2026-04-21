@@ -10,17 +10,39 @@
     <main class="popup">
       <section class="panel">
         <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
-        <h1 data-i18n="popupHeading">Website blocking</h1>
+        <h1 data-i18n="popupHeading">Focus overview</h1>
+
         <label class="toggle">
-          <span data-i18n="focusModeLabel">Focus mode</span>
+          <span data-i18n="focusModeLabel">Manual focus mode</span>
           <input id="enabledToggle" type="checkbox">
         </label>
+
         <p id="statusText" class="status"></p>
-        <div class="summary">
-          <span data-i18n="popupBlockedDomainsLabel">Active domains</span>
-          <strong id="blockedCount">0</strong>
+
+        <div class="summary-grid">
+          <div class="summary">
+            <span data-i18n="popupBlockedDomainsLabel">Active domains</span>
+            <strong id="blockedCount">0</strong>
+          </div>
+          <div class="summary">
+            <span data-i18n="scheduleModeLabel">Scheduled focus</span>
+            <strong id="scheduleStatus">-</strong>
+          </div>
         </div>
-        <button id="openOptionsButton" class="button" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
+
+        <section class="stack">
+          <div class="stack-header">
+            <h2 data-i18n="popupPomodoroHeading">Pomodoro</h2>
+            <span id="pomodoroPhase" class="pill">-</span>
+          </div>
+          <p id="pomodoroStatus" class="subtle"></p>
+          <div class="actions-row">
+            <button id="startPomodoroButton" class="button" type="button" data-i18n="startPomodoroButton">Start focus sprint</button>
+            <button id="stopPomodoroButton" class="button button-secondary" type="button" data-i18n="stopPomodoroButton">Stop</button>
+          </div>
+        </section>
+
+        <button id="openOptionsButton" class="button button-muted" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
       </section>
     </main>
     <script type="module" src="./index.js"></script>
