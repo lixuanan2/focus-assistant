@@ -5,8 +5,12 @@ import {
   renderFormFields,
   syncSettingsFromForm
 } from "./form-fields.js";
+import { createScheduleSection } from "./schedule-section.js";
 import { createGroupSection } from "./group-section.js";
 import { createDomainSection } from "./domain-section.js";
+
+const DEFAULT_PANEL = "modes";
+const DOMAINS_PANEL = "domains";
 
 const elements = {
   settingsForm: document.querySelector("#settingsForm"),
@@ -14,10 +18,18 @@ const elements = {
   panels: Array.from(document.querySelectorAll("[data-panel]")),
   enabledInput: document.querySelector("#enabledInput"),
   scheduleEnabledInput: document.querySelector("#scheduleEnabledInput"),
-  scheduleMorningStartInput: document.querySelector("#scheduleMorningStartInput"),
-  scheduleMorningEndInput: document.querySelector("#scheduleMorningEndInput"),
-  scheduleAfternoonStartInput: document.querySelector("#scheduleAfternoonStartInput"),
-  scheduleAfternoonEndInput: document.querySelector("#scheduleAfternoonEndInput"),
+  scheduleWindowCount: document.querySelector("#scheduleWindowCount"),
+  scheduleWindowList: document.querySelector("#scheduleWindowList"),
+  addScheduleWindowButton: document.querySelector("#addScheduleWindowButton"),
+  scheduleOverviewPage: document.querySelector("#scheduleOverviewPage"),
+  scheduleDetailPage: document.querySelector("#scheduleDetailPage"),
+  scheduleBackButton: document.querySelector("#scheduleBackButton"),
+  scheduleDetailCount: document.querySelector("#scheduleDetailCount"),
+  selectedScheduleLabel: document.querySelector("#selectedScheduleLabel"),
+  selectedScheduleMeta: document.querySelector("#selectedScheduleMeta"),
+  scheduleDayList: document.querySelector("#scheduleDayList"),
+  scheduleStartInput: document.querySelector("#scheduleStartInput"),
+  scheduleEndInput: document.querySelector("#scheduleEndInput"),
   pomodoroWorkMinutesInput: document.querySelector("#pomodoroWorkMinutesInput"),
   pomodoroBreakMinutesInput: document.querySelector("#pomodoroBreakMinutesInput"),
   focusTaskInput: document.querySelector("#focusTaskInput"),
@@ -26,6 +38,7 @@ const elements = {
   blockedPageModeInput: document.querySelector("#blockedPageModeInput"),
   blockedPageUrlField: document.querySelector("#blockedPageUrlField"),
   blockedPageUrlInput: document.querySelector("#blockedPageUrlInput"),
+  allowBlockedPageBypassInput: document.querySelector("#allowBlockedPageBypassInput"),
   groupCount: document.querySelector("#groupCount"),
   newGroupInput: document.querySelector("#newGroupInput"),
   addGroupButton: document.querySelector("#addGroupButton"),
@@ -46,8 +59,16 @@ const elements = {
 };
 
 let currentSettings = null;
+let lastSavedSettings = null;
 let selectedGroupId = null;
 let isDirty = false;
+
+const scheduleSection = createScheduleSection({
+  elements,
+  t,
+  withDraftMutation,
+  setFeedback
+});
 
 const groupSection = createGroupSection({
   elements,
@@ -74,7 +95,9 @@ async function init() {
   initializeFormFields(elements, t);
   initializeNavigation();
   initializeDirtyTracking();
+  initializeFormEvents();
   const settings = await getSettings();
+  lastSavedSettings = cloneSettings(settings);
   render(settings);
 }
 
@@ -82,6 +105,7 @@ function render(settings) {
   currentSettings = settings;
   selectedGroupId = resolveSelectedGroupId(settings, selectedGroupId, getRequestedRoute());
   renderFormFields(settings, elements);
+  scheduleSection.render(settings);
   groupSection.render(settings);
   domainSection.render(settings);
   renderDirtyState();
@@ -98,11 +122,15 @@ function setFeedback(message) {
   elements.feedback.textContent = message;
 }
 
-function setSelectedGroupId(nextGroupId, updateHash = true) {
+function setSelectedGroupId(nextGroupId, updateHash = true, skipDirtyCheck = false) {
+  if (nextGroupId !== selectedGroupId && !skipDirtyCheck && !canLeaveCurrentView()) {
+    return;
+  }
+
   syncBeforeViewChange();
   selectedGroupId = nextGroupId;
   if (updateHash) {
-    updateRouteHash("domains", nextGroupId);
+    updateRouteHash(DOMAINS_PANEL, nextGroupId);
   }
   render(currentSettings);
 }
@@ -113,7 +141,11 @@ function initializeNavigation() {
 
   for (const navItem of elements.navItems) {
     navItem.addEventListener("click", () => {
-      if (navItem.dataset.navTarget === "domains") {
+      if (!canLeaveCurrentView()) {
+        return;
+      }
+
+      if (navItem.dataset.navTarget === DOMAINS_PANEL) {
         selectedGroupId = null;
       }
       activatePanel(navItem.dataset.navTarget);
@@ -122,7 +154,7 @@ function initializeNavigation() {
 
   window.addEventListener("hashchange", () => {
     const route = getRequestedRoute();
-    selectedGroupId = route.panel === "domains" ? route.groupId : selectedGroupId;
+    selectedGroupId = route.panel === DOMAINS_PANEL ? route.groupId : selectedGroupId;
     activatePanel(route.panel, false);
     if (currentSettings) {
       render(currentSettings);
@@ -131,9 +163,7 @@ function initializeNavigation() {
 }
 
 function activatePanel(panelName, updateHash = true) {
-  const activePanel = elements.panels.some((panel) => panel.dataset.panel === panelName)
-    ? panelName
-    : "modes";
+  const activePanel = isKnownPanel(panelName) ? panelName : DEFAULT_PANEL;
 
   for (const navItem of elements.navItems) {
     navItem.classList.toggle("is-active", navItem.dataset.navTarget === activePanel);
@@ -144,26 +174,30 @@ function activatePanel(panelName, updateHash = true) {
   }
 
   if (updateHash) {
-    updateRouteHash(activePanel, activePanel === "domains" ? selectedGroupId : null);
+    updateRouteHash(activePanel, activePanel === DOMAINS_PANEL ? selectedGroupId : null);
   }
 }
 
 function getRequestedRoute() {
   const raw = window.location.hash.replace(/^#/, "");
-  const [panel = "modes", groupId = null] = raw.split("/");
+  const [panel = DEFAULT_PANEL, groupId = null] = raw.split("/");
 
   return {
     panel,
-    groupId: panel === "domains" ? groupId : null
+    groupId: panel === DOMAINS_PANEL ? groupId : null
   };
 }
 
 function resolveSelectedGroupId(settings, currentGroupId, route) {
-  if (route.panel === "domains" && route.groupId && settings.groups.some((group) => group.id === route.groupId)) {
+  if (
+    route.panel === DOMAINS_PANEL &&
+    route.groupId &&
+    settings.groups.some((group) => group.id === route.groupId)
+  ) {
     return route.groupId;
   }
 
-  if (route.panel === "domains" && !route.groupId) {
+  if (route.panel === DOMAINS_PANEL && !route.groupId) {
     return null;
   }
 
@@ -175,19 +209,33 @@ function resolveSelectedGroupId(settings, currentGroupId, route) {
 }
 
 function updateRouteHash(panel, groupId) {
-  const nextHash = panel === "domains" && groupId ? `#domains/${groupId}` : `#${panel}`;
+  const nextHash = panel === DOMAINS_PANEL && groupId ? `#${DOMAINS_PANEL}/${groupId}` : `#${panel}`;
 
   if (window.location.hash !== nextHash) {
     window.location.hash = nextHash;
   }
 }
 
+function isKnownPanel(panelName) {
+  return elements.panels.some((panel) => panel.dataset.panel === panelName);
+}
+
 function initializeDirtyTracking() {
   elements.settingsForm.addEventListener("input", handleDirtyInput, true);
   elements.settingsForm.addEventListener("change", handleDirtyInput, true);
+  window.addEventListener("beforeunload", handleBeforeUnload);
   elements.groupBackButton.addEventListener("click", () => {
     setSelectedGroupId(null);
   });
+}
+
+function initializeFormEvents() {
+  elements.blockedPageModeInput.addEventListener("change", () => {
+    syncSettingsFromForm(currentSettings, elements);
+    elements.blockedPageUrlField.hidden = elements.blockedPageModeInput.value !== "external";
+  });
+
+  elements.settingsForm.addEventListener("submit", handleSubmit);
 }
 
 function handleDirtyInput(event) {
@@ -217,29 +265,64 @@ function syncBeforeViewChange() {
   syncSettingsFromForm(currentSettings, elements);
 }
 
-elements.blockedPageModeInput.addEventListener("change", () => {
-  syncSettingsFromForm(currentSettings, elements);
-  elements.blockedPageUrlField.hidden = elements.blockedPageModeInput.value !== "external";
-});
+function canLeaveCurrentView() {
+  if (!isDirty) {
+    return true;
+  }
 
-elements.settingsForm.addEventListener("submit", async (event) => {
+  const shouldDiscard = window.confirm(t("unsavedChangesConfirm"));
+
+  if (!shouldDiscard) {
+    return false;
+  }
+
+  discardUnsavedChanges();
+
+  return true;
+}
+
+function handleBeforeUnload(event) {
+  if (!isDirty) {
+    return;
+  }
+
+  event.preventDefault();
+  event.returnValue = "";
+}
+
+async function handleSubmit(event) {
   event.preventDefault();
   syncSettingsFromForm(currentSettings, elements);
 
   const nextSettings = await saveSettings(currentSettings);
 
+  lastSavedSettings = cloneSettings(nextSettings);
   isDirty = false;
   render(nextSettings);
-  setFeedback(
-    t(
-      "settingsSavedMessage",
-      String(nextSettings.blockedSites.filter((site) => site.enabled).length)
-    )
-  );
+  setFeedback(t("settingsSavedMessage", String(countEnabledSites(nextSettings))));
 
   window.setTimeout(() => {
     setFeedback("");
   }, 2500);
-});
+}
+
+function countEnabledSites(settings) {
+  return settings.blockedSites.filter((site) => site.enabled).length;
+}
+
+function discardUnsavedChanges() {
+  if (!lastSavedSettings) {
+    return;
+  }
+
+  currentSettings = cloneSettings(lastSavedSettings);
+  isDirty = false;
+  setFeedback("");
+  render(currentSettings);
+}
+
+function cloneSettings(settings) {
+  return JSON.parse(JSON.stringify(settings));
+}
 
 init();

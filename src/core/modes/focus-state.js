@@ -1,5 +1,5 @@
 import { isBlockedUrl } from "../blocking/domain.js";
-import { getGroupMap, isGroupModeEnabled } from "../grouping/groups.js";
+import { getDefaultGroup, getGroupMap, isGroupModeEnabled } from "../grouping/groups.js";
 import { getBypassState, isBypassActiveForUrl } from "./bypass.js";
 import { getPomodoroState } from "./pomodoro.js";
 import { getScheduleState } from "./schedule.js";
@@ -9,6 +9,10 @@ export function getFocusState(settings, runtimeState, now = new Date()) {
   const pomodoroState = getPomodoroState(runtimeState, now);
   const bypassState = getBypassState(runtimeState, now);
   const activeSources = [];
+
+  if (hasPermanentBlocking(settings)) {
+    activeSources.push("permanent");
+  }
 
   if (pomodoroState.active && pomodoroState.phase === "focus") {
     activeSources.push("pomodoro");
@@ -53,13 +57,27 @@ function getEnabledDomainsForSources(settings, activeSources) {
   }
 
   const groupMap = getGroupMap(settings.groups);
+  const defaultGroup = getDefaultGroup(settings.groups);
 
   return settings.blockedSites
     .filter((site) => site.enabled)
     .filter((site) => {
-      const group = groupMap.get(site.groupId) ?? groupMap.values().next().value;
+      const group = groupMap.get(site.groupId) ?? defaultGroup;
 
       return activeSources.some((source) => isGroupModeEnabled(group, source));
     })
     .map((site) => site.domain);
+}
+
+function hasPermanentBlocking(settings) {
+  const groupMap = getGroupMap(settings.groups);
+  const defaultGroup = getDefaultGroup(settings.groups);
+
+  return settings.blockedSites
+    .filter((site) => site.enabled)
+    .some((site) => {
+      const group = groupMap.get(site.groupId) ?? defaultGroup;
+
+      return isGroupModeEnabled(group, "permanent");
+    });
 }

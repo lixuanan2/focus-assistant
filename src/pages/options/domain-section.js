@@ -1,8 +1,8 @@
 import { normalizeBlockedSiteEntry } from "../../core/blocking/domain.js";
+import { GROUP_MODES, getGroupModeLabelKey } from "../../core/grouping/modes.js";
 import { DEFAULT_GROUP_ID } from "../../core/settings/defaults.js";
 
 const PLACEHOLDER_ROW_COUNT = 6;
-const GROUP_MODES = ["manual", "schedule", "pomodoro"];
 
 export function createDomainSection({
   elements,
@@ -88,7 +88,7 @@ export function createDomainSection({
       });
 
       const text = document.createElement("span");
-      text.textContent = t(`groupMode${capitalize(mode)}`);
+      text.textContent = t(getGroupModeLabelKey(mode));
 
       modeLabel.append(checkbox, text);
       elements.selectedGroupModes.append(modeLabel);
@@ -249,8 +249,4 @@ export function createDomainSection({
     });
     setFeedback("");
   }
-}
-
-function capitalize(value) {
-  return value.slice(0, 1).toUpperCase() + value.slice(1);
 }

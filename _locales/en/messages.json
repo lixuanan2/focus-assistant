@@ -41,8 +41,8 @@
   "popupPomodoroIdle": {
     "message": "No temporary sprint is running."
   },
-  "popupPomodoroFocus": {
-    "message": "Focus phase is running with $1 remaining.",
+  "popupPomodoroFocusLocked": {
+    "message": "Locked focus phase is running with $1 remaining. It cannot be stopped manually.",
     "placeholders": {
       "remaining": {
         "content": "$1"
@@ -59,9 +59,6 @@
   },
   "startPomodoroButton": {
     "message": "Start focus sprint"
-  },
-  "stopPomodoroButton": {
-    "message": "Stop"
   },
   "pomodoroPhaseIdle": {
     "message": "Idle"
@@ -81,6 +78,9 @@
   "navModes": {
     "message": "Focus modes"
   },
+  "navSchedule": {
+    "message": "Schedule"
+  },
   "navRecovery": {
     "message": "Recovery"
   },
@@ -90,26 +90,119 @@
   "navDomains": {
     "message": "Domains & groups"
   },
+  "navMoreSettings": {
+    "message": "More settings"
+  },
   "optionsDescription": {
-    "message": "Organize domains into groups, then bind each group to the focus modes where it should apply."
+    "message": "Organize domains into groups, then bind each group to focus modes or permanent blocking."
   },
   "optionsSectionModes": {
     "message": "Focus modes"
   },
   "optionsSectionModesDescription": {
-    "message": "Keep manual mode as a fallback, but let scheduled focus and pomodoro carry most of the work."
+    "message": "This page keeps manual mode and pomodoro. Recurring schedule windows now live in their own schedule management page."
+  },
+  "optionsSectionSchedule": {
+    "message": "Schedule management"
+  },
+  "optionsSectionScheduleDescription": {
+    "message": "Manage recurring focus windows here, including workday blocks, evening rules, and overnight windows."
   },
   "scheduleModeLabel": {
     "message": "Scheduled focus mode"
   },
-  "scheduleMorningLabel": {
-    "message": "Weekday morning"
+  "scheduleWindowsLabel": {
+    "message": "Schedule windows"
   },
-  "scheduleAfternoonLabel": {
-    "message": "Weekday afternoon"
+  "scheduleWindowColumn": {
+    "message": "Window"
   },
-  "timeRangeSeparator": {
-    "message": "to"
+  "scheduleDaysColumn": {
+    "message": "Days"
+  },
+  "scheduleTimeColumn": {
+    "message": "Time"
+  },
+  "scheduleActionColumn": {
+    "message": "Action"
+  },
+  "scheduleWindowsDescription": {
+    "message": "Add as many windows as you need so scheduled focus can match your real week."
+  },
+  "scheduleWindowsCount": {
+    "message": "$1 window(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addScheduleWindowButton": {
+    "message": "Add window"
+  },
+  "removeScheduleWindowButton": {
+    "message": "Remove window"
+  },
+  "scheduleBackButton": {
+    "message": "Back to windows"
+  },
+  "scheduleWindowTitle": {
+    "message": "Window $1",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "scheduleEmptyState": {
+    "message": "No schedule windows yet. Add one to start with a weekday rule."
+  },
+  "scheduleDetailMeta": {
+    "message": "Current rule covers: $1",
+    "placeholders": {
+      "summary": {
+        "content": "$1"
+      }
+    }
+  },
+  "scheduleDaysLabel": {
+    "message": "Active days"
+  },
+  "scheduleStartLabel": {
+    "message": "Start time"
+  },
+  "scheduleEndLabel": {
+    "message": "End time"
+  },
+  "dayMon": {
+    "message": "Mon"
+  },
+  "dayTue": {
+    "message": "Tue"
+  },
+  "dayWed": {
+    "message": "Wed"
+  },
+  "dayThu": {
+    "message": "Thu"
+  },
+  "dayFri": {
+    "message": "Fri"
+  },
+  "daySat": {
+    "message": "Sat"
+  },
+  "daySun": {
+    "message": "Sun"
+  },
+  "scheduleNoDays": {
+    "message": "No days selected"
+  },
+  "scheduleWeekdaysSummary": {
+    "message": "Weekdays"
+  },
+  "scheduleEverydaySummary": {
+    "message": "Every day"
   },
   "optionsSectionPomodoro": {
     "message": "Pomodoro"
@@ -127,7 +220,7 @@
     "message": "Recovery page"
   },
   "optionsSectionRecoveryDescription": {
-    "message": "The blocked page should help you recover, not just say no."
+    "message": "This section keeps the recovery context and default bypass duration. The blocked page itself now uses a lighter interaction model."
   },
   "focusTaskLabel": {
     "message": "Current focus task"
@@ -142,13 +235,46 @@
     "message": "Blocked page target"
   },
   "optionsSectionBlockedPageDescription": {
-    "message": "Use the built-in page if you want recovery prompts and friction."
+    "message": "The built-in page is still the recommended default because its behavior stays fully under extension control."
   },
   "optionsSectionDomains": {
     "message": "Blocked domains"
   },
   "optionsSectionDomainsDescription": {
     "message": "Manage domains by group first, then edit the selected group's name, active modes, and domains below."
+  },
+  "optionsSectionMoreSettings": {
+    "message": "More settings"
+  },
+  "optionsSectionMoreSettingsDescription": {
+    "message": "Reserve space for features that are not ready yet, so later iterations can land without rebuilding the page structure."
+  },
+  "allowBlockedPageBypassLabel": {
+    "message": "Allow temporary bypass from the blocked page"
+  },
+  "allowBlockedPageBypassDescription": {
+    "message": "If disabled, the blocked page can no longer unlock sites for a few minutes. Users must come back here to change it."
+  },
+  "placeholderCardHabitsTitle": {
+    "message": "Habit shaping"
+  },
+  "placeholderCardHabitsDescription": {
+    "message": "Space for stricter schedules, stronger lock rules, and default work routines."
+  },
+  "placeholderCardInsightsTitle": {
+    "message": "Insights"
+  },
+  "placeholderCardInsightsDescription": {
+    "message": "Space for interruption reasons, weekly patterns, and recovery summaries."
+  },
+  "placeholderCardExperimentsTitle": {
+    "message": "Experiments"
+  },
+  "placeholderCardExperimentsDescription": {
+    "message": "Space for reward unlocks, lighter bypass friction, and alternate blocked-page styles."
+  },
+  "placeholderTagPlanned": {
+    "message": "Planned"
   },
   "groupListLabel": {
     "message": "Domain groups"
@@ -173,6 +299,9 @@
   },
   "newGroupPlaceholder": {
     "message": "Enter a group name, for example Entertainment"
+  },
+  "groupModePermanent": {
+    "message": "Permanent"
   },
   "groupModeManual": {
     "message": "Manual"
@@ -273,6 +402,9 @@
   "unsavedChangesHint": {
     "message": "You have unsaved changes. Save to apply them."
   },
+  "unsavedChangesConfirm": {
+    "message": "You have unsaved changes. Leaving now will discard them. Continue?"
+  },
   "settingsSavedMessage": {
     "message": "Saved. $1 domain(s) are currently enabled.",
     "placeholders": {
@@ -294,7 +426,7 @@
     "message": "This site is blocked"
   },
   "blockedPageDescription": {
-    "message": "A focus mode is currently active, so matching sites are redirected to this recovery page."
+    "message": "This site is blocked right now. Avoid more decisions: go back and continue, or use one short bypass."
   },
   "blockedPageOriginalUrlLabel": {
     "message": "Original URL"
@@ -334,6 +466,37 @@
   "blockedPageBypassHeading": {
     "message": "Temporary bypass"
   },
+  "blockedPageMinimalHeading": {
+    "message": "Keep it simple"
+  },
+  "blockedPageMinimalDescription": {
+    "message": "Go back and continue, or use one short temporary bypass if you really need it."
+  },
+  "blockedPageReturnButton": {
+    "message": "Go back and continue"
+  },
+  "blockedPageQuickBypassButton": {
+    "message": "Temporary bypass for $1 minutes",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageQuickBypassHint": {
+    "message": "This only unlocks the site for $1 minutes, then blocking resumes automatically.",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageQuickBypassStarting": {
+    "message": "Starting temporary bypass..."
+  },
+  "blockedPageBypassDisabledHint": {
+    "message": "Temporary bypass is disabled in settings. Go back to settings to change it."
+  },
   "blockedPageBypassDescription": {
     "message": "Make impulse harder: choose a reason, wait, then unlock briefly."
   },
@@ -367,6 +530,9 @@
   },
   "blockedPageReasonRequired": {
     "message": "Choose a reason or add a note first."
+  },
+  "focusSourcePermanent": {
+    "message": "Permanent blocking"
   },
   "focusSourceManual": {
     "message": "Manual focus mode"

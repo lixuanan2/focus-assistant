@@ -1,4 +1,5 @@
 import { saveSettings } from "../../core/settings/storage.js";
+import { FOCUS_MESSAGE_TYPES } from "../../core/runtime/messages.js";
 import { applyI18n, t } from "../../lib/i18n.js";
 import { formatDurationMmSs } from "../../lib/time.js";
 
@@ -9,7 +10,6 @@ const scheduleStatus = document.querySelector("#scheduleStatus");
 const pomodoroPhase = document.querySelector("#pomodoroPhase");
 const pomodoroStatus = document.querySelector("#pomodoroStatus");
 const startPomodoroButton = document.querySelector("#startPomodoroButton");
-const stopPomodoroButton = document.querySelector("#stopPomodoroButton");
 const openOptionsButton = document.querySelector("#openOptionsButton");
 
 let latestState = null;
@@ -18,6 +18,7 @@ let timerId = null;
 async function init() {
   applyI18n();
   document.title = t("appName");
+  initializeEvents();
   await refreshState();
   timerId = window.setInterval(() => {
     if (latestState) {
@@ -27,78 +28,35 @@ async function init() {
 }
 
 async function refreshState() {
-  const response = await chrome.runtime.sendMessage({ type: "focus:get-state" });
-
-  if (!response.ok) {
-    throw new Error(response.error);
-  }
-
-  latestState = response.result;
+  latestState = await requestStatePayload();
   render(latestState);
 }
 
 function render(statePayload) {
   const { settings, focusState } = statePayload;
-  const enabledCount = focusState.enabledDomains.length;
-  const totalCount = settings.blockedSites.length;
 
   enabledToggle.checked = settings.enabled;
-  blockedCount.textContent = `${enabledCount} / ${totalCount}`;
-  scheduleStatus.textContent = focusState.scheduleState.active
-    ? t("popupScheduleActive")
-    : focusState.scheduleState.enabled
-      ? t("popupScheduleReady")
-      : t("popupScheduleOff");
-  statusText.textContent = focusState.active
-    ? t("popupStatusEnabled")
-    : t("popupStatusDisabled");
-
+  blockedCount.textContent = buildBlockedCountText(statePayload);
+  scheduleStatus.textContent = buildScheduleStatusText(focusState);
+  statusText.textContent = buildFocusStatusText(focusState);
   pomodoroPhase.textContent = getPomodoroPhaseLabel(focusState.pomodoroState.phase);
   pomodoroStatus.textContent = buildPomodoroStatus(focusState);
-  stopPomodoroButton.disabled = !focusState.pomodoroState.active;
+  startPomodoroButton.disabled = focusState.pomodoroState.active;
 }
 
-enabledToggle.addEventListener("change", async () => {
-  if (!latestState) {
-    return;
-  }
-
-  const nextSettings = await saveSettings({
-    ...latestState.settings,
-    enabled: enabledToggle.checked
+function initializeEvents() {
+  enabledToggle.addEventListener("change", handleManualToggleChange);
+  startPomodoroButton.addEventListener("click", handlePomodoroStart);
+  openOptionsButton.addEventListener("click", () => {
+    chrome.runtime.openOptionsPage();
   });
 
-  latestState.settings = nextSettings;
-  await refreshState();
-});
-
-startPomodoroButton.addEventListener("click", async () => {
-  const response = await chrome.runtime.sendMessage({ type: "focus:start-pomodoro" });
-
-  if (response.ok) {
-    latestState = response.result;
-    render(latestState);
-  }
-});
-
-stopPomodoroButton.addEventListener("click", async () => {
-  const response = await chrome.runtime.sendMessage({ type: "focus:stop-pomodoro" });
-
-  if (response.ok) {
-    latestState = response.result;
-    render(latestState);
-  }
-});
-
-openOptionsButton.addEventListener("click", () => {
-  chrome.runtime.openOptionsPage();
-});
-
-window.addEventListener("unload", () => {
-  if (timerId) {
-    window.clearInterval(timerId);
-  }
-});
+  window.addEventListener("unload", () => {
+    if (timerId) {
+      window.clearInterval(timerId);
+    }
+  });
+}
 
 function buildPomodoroStatus(focusState) {
   const { pomodoroState } = focusState;
@@ -108,8 +66,8 @@ function buildPomodoroStatus(focusState) {
   }
 
   return pomodoroState.phase === "focus"
-    ? t("popupPomodoroFocus", formatRemainingMs(pomodoroState.remainingMs))
-    : t("popupPomodoroBreak", formatRemainingMs(pomodoroState.remainingMs));
+    ? t("popupPomodoroFocusLocked", formatDurationMmSs(pomodoroState.remainingMs))
+    : t("popupPomodoroBreak", formatDurationMmSs(pomodoroState.remainingMs));
 }
 
 function getPomodoroPhaseLabel(phase) {
@@ -123,8 +81,54 @@ function getPomodoroPhaseLabel(phase) {
   }
 }
 
-function formatRemainingMs(remainingMs) {
-  return formatDurationMmSs(remainingMs);
+function buildBlockedCountText({ settings, focusState }) {
+  return `${focusState.enabledDomains.length} / ${settings.blockedSites.length}`;
+}
+
+function buildScheduleStatusText(focusState) {
+  return focusState.scheduleState.active
+    ? t("popupScheduleActive")
+    : focusState.scheduleState.enabled
+      ? t("popupScheduleReady")
+      : t("popupScheduleOff");
+}
+
+function buildFocusStatusText(focusState) {
+  return focusState.active
+    ? t("popupStatusEnabled")
+    : t("popupStatusDisabled");
+}
+
+async function requestStatePayload() {
+  const response = await chrome.runtime.sendMessage({ type: FOCUS_MESSAGE_TYPES.getState });
+
+  if (!response.ok) {
+    throw new Error(response.error);
+  }
+
+  return response.result;
+}
+
+async function handleManualToggleChange() {
+  if (!latestState) {
+    return;
+  }
+
+  await saveSettings({
+    ...latestState.settings,
+    enabled: enabledToggle.checked
+  });
+
+  await refreshState();
+}
+
+async function handlePomodoroStart() {
+  const response = await chrome.runtime.sendMessage({ type: FOCUS_MESSAGE_TYPES.startPomodoro });
+
+  if (response.ok) {
+    latestState = response.result;
+    render(latestState);
+  }
 }
 
 init();

@@ -4,22 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Focus Assistant Settings</title>
+    <link rel="icon" href="../../assets/icons/icon-32.png">
     <link rel="stylesheet" href="./index.css">
   </head>
   <body>
     <main class="page">
       <section class="hero">
-        <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
-        <h1 data-i18n="optionsHeading">Focus settings</h1>
-        <p class="description" data-i18n="optionsDescription">Use scheduled focus for default structure, pomodoro for temporary sprints, and keep blocked domains under tighter control.</p>
+        <div class="hero-main">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
+            <h1 data-i18n="optionsHeading">Focus settings</h1>
+            <p class="description" data-i18n="optionsDescription">Use scheduled focus for default structure, pomodoro for temporary sprints, and keep blocked domains under tighter control.</p>
+          </div>
+          <img class="brand-mark" src="../../assets/icons/icon-128.png" alt="Focus Assistant logo">
+        </div>
       </section>
 
       <section class="workspace">
         <aside class="settings-nav">
           <button class="nav-item is-active" type="button" data-nav-target="modes" data-i18n="navModes">Focus modes</button>
+          <button class="nav-item" type="button" data-nav-target="schedule" data-i18n="navSchedule">Schedule</button>
           <button class="nav-item" type="button" data-nav-target="recovery" data-i18n="navRecovery">Recovery</button>
           <button class="nav-item" type="button" data-nav-target="blocked-page" data-i18n="navBlockedPage">Blocked page</button>
           <button class="nav-item" type="button" data-nav-target="domains" data-i18n="navDomains">Domains</button>
+          <button class="nav-item" type="button" data-nav-target="more-settings" data-i18n="navMoreSettings">More settings</button>
         </aside>
 
         <section class="card">
@@ -36,33 +44,6 @@
                 <input id="enabledInput" type="checkbox">
               </label>
 
-              <label class="field">
-                <span data-i18n="scheduleModeLabel">Scheduled focus mode</span>
-                <input id="scheduleEnabledInput" type="checkbox">
-              </label>
-
-              <div class="schedule-grid">
-                <label class="field field-stack" for="scheduleMorningStartInput">
-                  <span data-i18n="scheduleMorningLabel">Weekday morning</span>
-                  <div class="time-range">
-                    <input id="scheduleMorningStartInput" type="time">
-                    <span data-i18n="timeRangeSeparator">to</span>
-                    <input id="scheduleMorningEndInput" type="time">
-                  </div>
-                </label>
-
-                <label class="field field-stack" for="scheduleAfternoonStartInput">
-                  <span data-i18n="scheduleAfternoonLabel">Weekday afternoon</span>
-                  <div class="time-range">
-                    <input id="scheduleAfternoonStartInput" type="time">
-                    <span data-i18n="timeRangeSeparator">to</span>
-                    <input id="scheduleAfternoonEndInput" type="time">
-                  </div>
-                </label>
-              </div>
-            </section>
-
-            <section class="section" data-panel="modes">
               <div class="section-header">
                 <h2 data-i18n="optionsSectionPomodoro">Pomodoro</h2>
                 <p data-i18n="optionsSectionPomodoroDescription">Use pomodoro as a temporary sprint mode without changing your default schedule.</p>
@@ -78,6 +59,68 @@
                   <span data-i18n="pomodoroBreakMinutesLabel">Break minutes</span>
                   <input id="pomodoroBreakMinutesInput" type="number" min="1" max="60" step="1">
                 </label>
+              </div>
+            </section>
+
+            <section class="section" data-panel="schedule">
+              <div class="section-badge" data-i18n="navSchedule">Schedule</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionSchedule">Schedule management</h2>
+                <p data-i18n="optionsSectionScheduleDescription">Manage recurring focus windows here, including workday blocks and overnight rules.</p>
+              </div>
+
+              <label class="field">
+                <span data-i18n="scheduleModeLabel">Scheduled focus mode</span>
+                <input id="scheduleEnabledInput" type="checkbox">
+              </label>
+
+              <div class="schedule-shell">
+                <div id="scheduleOverviewPage" class="schedule-view">
+                  <div class="field-header">
+                    <span data-i18n="scheduleWindowsLabel">定时时段</span>
+                    <span id="scheduleWindowCount" class="field-meta">0</span>
+                  </div>
+
+                  <div class="schedule-toolbar">
+                    <p class="field-note" data-i18n="scheduleWindowsDescription">Add one or more windows so scheduled focus can match your actual week.</p>
+                    <button id="addScheduleWindowButton" class="button button-secondary" type="button" data-i18n="addScheduleWindowButton">Add window</button>
+                  </div>
+
+                  <div id="scheduleWindowList" class="schedule-window-list"></div>
+                </div>
+
+                <div id="scheduleDetailPage" class="schedule-view" hidden>
+                  <div class="field-header">
+                    <button id="scheduleBackButton" class="ghost-button" type="button" data-i18n="scheduleBackButton">返回时段列表</button>
+                    <span id="scheduleDetailCount" class="field-meta">0 / 0</span>
+                  </div>
+
+                  <div class="schedule-detail-shell">
+                    <div class="schedule-detail-header">
+                      <div>
+                        <div id="selectedScheduleLabel" class="schedule-detail-page-title" data-i18n="scheduleWindowsLabel">定时时段</div>
+                        <p id="selectedScheduleMeta" class="schedule-detail-meta"></p>
+                      </div>
+                    </div>
+
+                    <div class="field field-stack">
+                      <span data-i18n="scheduleDaysLabel">生效日期</span>
+                      <div id="scheduleDayList" class="schedule-day-list" role="group" aria-label="Schedule days"></div>
+                    </div>
+
+                    <div class="schedule-time-grid">
+                      <label class="field field-stack">
+                        <span data-i18n="scheduleStartLabel">开始时间</span>
+                        <input id="scheduleStartInput" type="time">
+                      </label>
+
+                      <label class="field field-stack">
+                        <span data-i18n="scheduleEndLabel">结束时间</span>
+                        <input id="scheduleEndInput" type="time">
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -184,8 +227,8 @@
                 </div>
 
                 <div class="domain-add">
-                    <input id="newDomainInput" type="text" inputmode="url" spellcheck="false">
-                    <button id="addDomainButton" class="button button-secondary" type="button" data-i18n="addDomainButton">Add domain</button>
+                  <input id="newDomainInput" type="text" inputmode="url" spellcheck="false">
+                  <button id="addDomainButton" class="button button-secondary" type="button" data-i18n="addDomainButton">Add domain</button>
                 </div>
 
                 <div class="domain-list-shell">
@@ -196,6 +239,48 @@
                   </div>
                   <div id="domainList" class="domain-list" role="list"></div>
                 </div>
+              </div>
+            </section>
+
+            <section class="section" data-panel="more-settings">
+              <div class="section-badge" data-i18n="navMoreSettings">More settings</div>
+              <div class="section-header">
+                <h2 data-i18n="optionsSectionMoreSettings">More settings</h2>
+                <p data-i18n="optionsSectionMoreSettingsDescription">Reserve space for features that are not ready yet, so the next iterations can land without rebuilding the page structure.</p>
+              </div>
+
+              <div class="config-card">
+                <label class="field">
+                  <span data-i18n="allowBlockedPageBypassLabel">Allow temporary bypass from the blocked page</span>
+                  <input id="allowBlockedPageBypassInput" type="checkbox">
+                </label>
+                <p class="field-note" data-i18n="allowBlockedPageBypassDescription">If disabled, the blocked page can no longer unlock sites for a few minutes. Users must come back here to change it.</p>
+              </div>
+
+              <div class="placeholder-grid">
+                <article class="placeholder-card">
+                  <div class="placeholder-card-header">
+                    <h3 data-i18n="placeholderCardHabitsTitle">Habit shaping</h3>
+                    <span class="placeholder-tag" data-i18n="placeholderTagPlanned">Planned</span>
+                  </div>
+                  <p data-i18n="placeholderCardHabitsDescription">Future space for stricter schedules, stronger lock rules, and default routines.</p>
+                </article>
+
+                <article class="placeholder-card">
+                  <div class="placeholder-card-header">
+                    <h3 data-i18n="placeholderCardInsightsTitle">Insights</h3>
+                    <span class="placeholder-tag" data-i18n="placeholderTagPlanned">Planned</span>
+                  </div>
+                  <p data-i18n="placeholderCardInsightsDescription">Future space for interruption reasons, weekly patterns, and recovery summaries.</p>
+                </article>
+
+                <article class="placeholder-card">
+                  <div class="placeholder-card-header">
+                    <h3 data-i18n="placeholderCardExperimentsTitle">Experiments</h3>
+                    <span class="placeholder-tag" data-i18n="placeholderTagPlanned">Planned</span>
+                  </div>
+                  <p data-i18n="placeholderCardExperimentsDescription">Future space for optional features such as reward unlocks, lighter bypass friction, or alternate blocked-page styles.</p>
+                </article>
               </div>
             </section>
 

@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Site Blocked</title>
+    <link rel="icon" href="../../assets/icons/icon-32.png">
     <link rel="stylesheet" href="./index.css">
   </head>
   <body>
     <main class="page">
       <section class="card">
+        <img class="brand-mark" src="../../assets/icons/icon-128.png" alt="Focus Assistant logo">
         <p class="eyebrow" data-i18n="appName">Focus Assistant</p>
         <h1 data-i18n="blockedPageHeading">This site is blocked</h1>
         <p class="description" data-i18n="blockedPageDescription">This website is blocked while focus mode is enabled.</p>
@@ -27,59 +29,26 @@
             <span class="panel-label" data-i18n="focusTaskLabel">Current focus task</span>
             <strong id="focusTaskText">-</strong>
           </section>
+          <section class="panel panel-wide">
+            <span class="panel-label" data-i18n="fallbackActionLabel">Smallest fallback action</span>
+            <p id="fallbackActionText" class="panel-copy">-</p>
+          </section>
         </div>
-
-        <section class="recovery">
-          <div class="recovery-header">
-            <h2 data-i18n="blockedPageRecoveryHeading">Recover focus</h2>
-            <p data-i18n="blockedPageRecoveryDescription">Use a small reset first, then decide whether you still need the site.</p>
-          </div>
-
-          <div class="recovery-grid">
-            <div>
-              <span class="panel-label" data-i18n="fallbackActionLabel">Smallest fallback action</span>
-              <p id="fallbackActionText" class="recovery-text">-</p>
-            </div>
-            <div>
-              <span class="panel-label" data-i18n="blockedPageReasonLabel">Why do you want to open it now?</span>
-              <select id="reasonSelect"></select>
-            </div>
-          </div>
-
-          <label class="field field-stack" for="noteInput">
-            <span data-i18n="blockedPageNoteLabel">Extra note</span>
-            <textarea id="noteInput" rows="3"></textarea>
-          </label>
-
-          <div class="recovery-actions">
-            <button id="startResetButton" class="button button-secondary" type="button" data-i18n="blockedPageResetButton">Do a 2-minute reset first</button>
-            <span id="resetStatus" class="inline-status"></span>
-          </div>
-        </section>
 
         <section class="bypass">
           <div class="bypass-header">
-            <h2 data-i18n="blockedPageBypassHeading">Temporary bypass</h2>
-            <p data-i18n="blockedPageBypassDescription">Make it harder to open on impulse: choose a reason, wait, then unlock briefly.</p>
+            <h2 data-i18n="blockedPageMinimalHeading">Keep it simple</h2>
+            <p data-i18n="blockedPageMinimalDescription">Go back and continue, or use one short temporary bypass if you really need it.</p>
           </div>
 
-          <div class="bypass-controls">
-            <label class="field field-stack" for="durationSelect">
-              <span data-i18n="blockedPageBypassDurationLabel">Bypass duration</span>
-              <select id="durationSelect">
-                <option value="5">5 min</option>
-                <option value="10">10 min</option>
-              </select>
-            </label>
-            <button id="startBypassButton" class="button" type="button" data-i18n="blockedPageStartCountdownButton">Start 15-second bypass countdown</button>
+          <div class="actions actions-primary">
+            <button id="goBackButton" class="button" type="button" data-i18n="blockedPageReturnButton">Go back and continue</button>
+            <button id="startBypassButton" class="button button-secondary" type="button">Temporary bypass</button>
+            <button id="openOptionsButton" class="button button-muted" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
           </div>
 
           <p id="bypassStatus" class="inline-status"></p>
         </section>
-
-        <div class="actions">
-          <button id="openOptionsButton" class="button button-muted" type="button" data-i18n="manageBlockedSitesButton">Manage blocked sites</button>
-        </div>
       </section>
     </main>
     <script type="module" src="./index.js"></script>

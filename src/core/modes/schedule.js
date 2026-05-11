@@ -23,27 +23,23 @@ export function getScheduleState(settings, now = new Date()) {
 export function findNextScheduleBoundary(windows, now = new Date()) {
   const candidates = [];
 
-  for (let offset = 0; offset < 8; offset += 1) {
-    const dayDate = new Date(now);
-    dayDate.setHours(0, 0, 0, 0);
-    dayDate.setDate(now.getDate() + offset);
+  for (let offset = -1; offset < 8; offset += 1) {
+    const dayDate = getDayStart(now);
+    dayDate.setDate(dayDate.getDate() + offset);
 
     for (const windowConfig of windows) {
-      const dayOfWeek = dayDate.getDay();
+      const occurrence = buildWindowOccurrence(windowConfig, dayDate);
 
-      if (!windowConfig.days.includes(dayOfWeek)) {
+      if (!occurrence) {
         continue;
       }
 
-      const startDate = buildDateWithClock(dayDate, windowConfig.start);
-      const endDate = buildDateWithClock(dayDate, windowConfig.end);
-
-      if (startDate > now) {
-        candidates.push(startDate);
+      if (occurrence.startDate > now) {
+        candidates.push(occurrence.startDate);
       }
 
-      if (endDate > now) {
-        candidates.push(endDate);
+      if (occurrence.endDate > now) {
+        candidates.push(occurrence.endDate);
       }
     }
   }
@@ -58,16 +54,29 @@ export function findNextScheduleBoundary(windows, now = new Date()) {
 }
 
 function isInsideScheduleWindow(windowConfig, now) {
-  const dayOfWeek = now.getDay();
+  const todayOccurrence = buildWindowOccurrence(windowConfig, getDayStart(now));
+  const previousDay = getDayStart(now);
+  previousDay.setDate(previousDay.getDate() - 1);
+  const previousDayOccurrence = buildWindowOccurrence(windowConfig, previousDay);
 
-  if (!windowConfig.days.includes(dayOfWeek)) {
-    return false;
+  return [todayOccurrence, previousDayOccurrence].some((occurrence) =>
+    occurrence ? now >= occurrence.startDate && now < occurrence.endDate : false
+  );
+}
+
+function buildWindowOccurrence(windowConfig, startDayDate) {
+  if (!windowConfig.days.includes(startDayDate.getDay())) {
+    return null;
   }
 
-  const startDate = buildDateWithClock(now, windowConfig.start);
-  const endDate = buildDateWithClock(now, windowConfig.end);
+  const startDate = buildDateWithClock(startDayDate, windowConfig.start);
+  const endDate = buildDateWithClock(startDayDate, windowConfig.end);
 
-  return now >= startDate && now < endDate;
+  if (endDate <= startDate) {
+    endDate.setDate(endDate.getDate() + 1);
+  }
+
+  return { startDate, endDate };
 }
 
 function buildDateWithClock(baseDate, clock) {
@@ -76,5 +85,11 @@ function buildDateWithClock(baseDate, clock) {
 
   date.setHours(hours, minutes, 0, 0);
 
+  return date;
+}
+
+function getDayStart(baseDate) {
+  const date = new Date(baseDate);
+  date.setHours(0, 0, 0, 0);
   return date;
 }

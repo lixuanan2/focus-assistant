@@ -41,8 +41,8 @@
   "popupPomodoroIdle": {
     "message": "还没有临时冲刺会话。"
   },
-  "popupPomodoroFocus": {
-    "message": "当前为专注阶段，剩余 $1。",
+  "popupPomodoroFocusLocked": {
+    "message": "当前为强制专注阶段，剩余 $1，期间不能手动停止。",
     "placeholders": {
       "remaining": {
         "content": "$1"
@@ -59,9 +59,6 @@
   },
   "startPomodoroButton": {
     "message": "开始专注冲刺"
-  },
-  "stopPomodoroButton": {
-    "message": "停止"
   },
   "pomodoroPhaseIdle": {
     "message": "空闲"
@@ -81,6 +78,9 @@
   "navModes": {
     "message": "专注模式"
   },
+  "navSchedule": {
+    "message": "定时管理"
+  },
   "navRecovery": {
     "message": "恢复机制"
   },
@@ -90,26 +90,119 @@
   "navDomains": {
     "message": "域名与分组"
   },
+  "navMoreSettings": {
+    "message": "更多设置"
+  },
   "optionsDescription": {
-    "message": "用分组把域名按场景拆开，再给每个组绑定不同的专注模式。"
+    "message": "用分组把域名按场景拆开，再给每个组绑定不同的专注模式或永久屏蔽。"
   },
   "optionsSectionModes": {
     "message": "专注模式"
   },
   "optionsSectionModesDescription": {
-    "message": "保留手动模式作为兜底，但尽量让定时模式和番茄钟替你做决定。"
+    "message": "这里保留的是手动模式和番茄钟。定时规则已经单独拆到“定时管理”页面。"
+  },
+  "optionsSectionSchedule": {
+    "message": "定时管理"
+  },
+  "optionsSectionScheduleDescription": {
+    "message": "把重复性的专注时段集中放到这里管理，适合工作日规则、晚间规则和跨天规则。"
   },
   "scheduleModeLabel": {
     "message": "定时专注模式"
   },
-  "scheduleMorningLabel": {
-    "message": "工作日上午"
+  "scheduleWindowsLabel": {
+    "message": "定时时段"
   },
-  "scheduleAfternoonLabel": {
-    "message": "工作日下午"
+  "scheduleWindowColumn": {
+    "message": "时段"
   },
-  "timeRangeSeparator": {
-    "message": "到"
+  "scheduleDaysColumn": {
+    "message": "日期"
+  },
+  "scheduleTimeColumn": {
+    "message": "时间"
+  },
+  "scheduleActionColumn": {
+    "message": "操作"
+  },
+  "scheduleWindowsDescription": {
+    "message": "按你的真实作息添加任意数量的时段，不再局限于固定的上午和下午。"
+  },
+  "scheduleWindowsCount": {
+    "message": "共 $1 条",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addScheduleWindowButton": {
+    "message": "添加时段"
+  },
+  "removeScheduleWindowButton": {
+    "message": "删除时段"
+  },
+  "scheduleBackButton": {
+    "message": "返回时段列表"
+  },
+  "scheduleWindowTitle": {
+    "message": "时段 $1",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "scheduleEmptyState": {
+    "message": "当前还没有定时时段。你可以先添加一条工作日规则。"
+  },
+  "scheduleDetailMeta": {
+    "message": "当前规则覆盖：$1",
+    "placeholders": {
+      "summary": {
+        "content": "$1"
+      }
+    }
+  },
+  "scheduleDaysLabel": {
+    "message": "生效日期"
+  },
+  "scheduleStartLabel": {
+    "message": "开始时间"
+  },
+  "scheduleEndLabel": {
+    "message": "结束时间"
+  },
+  "dayMon": {
+    "message": "周一"
+  },
+  "dayTue": {
+    "message": "周二"
+  },
+  "dayWed": {
+    "message": "周三"
+  },
+  "dayThu": {
+    "message": "周四"
+  },
+  "dayFri": {
+    "message": "周五"
+  },
+  "daySat": {
+    "message": "周六"
+  },
+  "daySun": {
+    "message": "周日"
+  },
+  "scheduleNoDays": {
+    "message": "未选择日期"
+  },
+  "scheduleWeekdaysSummary": {
+    "message": "工作日"
+  },
+  "scheduleEverydaySummary": {
+    "message": "每天"
   },
   "optionsSectionPomodoro": {
     "message": "番茄钟"
@@ -127,7 +220,7 @@
     "message": "恢复页"
   },
   "optionsSectionRecoveryDescription": {
-    "message": "被拦截后，页面应该把你拉回来，而不是只说“不许进”。"
+    "message": "这里保留的是恢复上下文和默认放行时长，拦截页面本身已经改成更轻的极简交互。"
   },
   "focusTaskLabel": {
     "message": "当前最重要的任务"
@@ -142,13 +235,46 @@
     "message": "拦截落地页"
   },
   "optionsSectionBlockedPageDescription": {
-    "message": "如果你想启用恢复提示和摩擦机制，建议继续使用内置页面。"
+    "message": "默认建议继续使用内置页面，这样 blocked 页面行为更可控，也方便后续继续扩展。"
   },
   "optionsSectionDomains": {
     "message": "域名列表"
   },
   "optionsSectionDomainsDescription": {
     "message": "先按分组管理，再在当前组详情里维护名称、生效模式和域名。"
+  },
+  "optionsSectionMoreSettings": {
+    "message": "更多设置"
+  },
+  "optionsSectionMoreSettingsDescription": {
+    "message": "先预留未来功能区域，后续迭代时就不用再重拆设置页结构。"
+  },
+  "allowBlockedPageBypassLabel": {
+    "message": "允许从屏蔽页临时放行"
+  },
+  "allowBlockedPageBypassDescription": {
+    "message": "关闭后，屏蔽页上的“临时放行”功能会失效，用户需要回到设置页重新开启。"
+  },
+  "placeholderCardHabitsTitle": {
+    "message": "习惯塑形"
+  },
+  "placeholderCardHabitsDescription": {
+    "message": "预留给更严格的时段规则、更强约束和默认工作流程。"
+  },
+  "placeholderCardInsightsTitle": {
+    "message": "行为洞察"
+  },
+  "placeholderCardInsightsDescription": {
+    "message": "预留给中断原因、每周模式和恢复表现等统计信息。"
+  },
+  "placeholderCardExperimentsTitle": {
+    "message": "实验功能"
+  },
+  "placeholderCardExperimentsDescription": {
+    "message": "预留给奖励型解锁、更轻的放行摩擦和不同拦截页样式。"
+  },
+  "placeholderTagPlanned": {
+    "message": "预留中"
   },
   "groupListLabel": {
     "message": "域名分组"
@@ -173,6 +299,9 @@
   },
   "newGroupPlaceholder": {
     "message": "输入分组名，例如 娱乐站点"
+  },
+  "groupModePermanent": {
+    "message": "永久屏蔽"
   },
   "groupModeManual": {
     "message": "手动"
@@ -273,6 +402,9 @@
   "unsavedChangesHint": {
     "message": "当前有未保存修改，保存后才会生效。"
   },
+  "unsavedChangesConfirm": {
+    "message": "当前有未保存修改。继续离开会丢弃这些修改，是否继续？"
+  },
   "settingsSavedMessage": {
     "message": "已保存，当前有 $1 个启用中的域名。",
     "placeholders": {
@@ -294,7 +426,7 @@
     "message": "当前网站已被屏蔽"
   },
   "blockedPageDescription": {
-    "message": "你当前处于专注阶段，命中的网站会被重定向到这个恢复页。"
+    "message": "当前网站已被拦截。现在不要再做更多决定，直接返回继续，或者短暂放行一次。"
   },
   "blockedPageOriginalUrlLabel": {
     "message": "原始网址"
@@ -334,6 +466,37 @@
   "blockedPageBypassHeading": {
     "message": "临时放行"
   },
+  "blockedPageMinimalHeading": {
+    "message": "保持简单"
+  },
+  "blockedPageMinimalDescription": {
+    "message": "直接返回继续专注，或者只临时放行一次。"
+  },
+  "blockedPageReturnButton": {
+    "message": "返回继续专注"
+  },
+  "blockedPageQuickBypassButton": {
+    "message": "临时放行 $1 分钟",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageQuickBypassHint": {
+    "message": "这次只会短暂放行 $1 分钟，到时会自动恢复拦截。",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "blockedPageQuickBypassStarting": {
+    "message": "正在临时放行..."
+  },
+  "blockedPageBypassDisabledHint": {
+    "message": "设置里当前不允许放行。请先回到设置页调整。"
+  },
   "blockedPageBypassDescription": {
     "message": "为了避免冲动打开，先选理由，再等待一小段时间，然后只放行很短一会儿。"
   },
@@ -367,6 +530,9 @@
   },
   "blockedPageReasonRequired": {
     "message": "先选一个原因，或者补一句说明。"
+  },
+  "focusSourcePermanent": {
+    "message": "永久屏蔽"
   },
   "focusSourceManual": {
     "message": "手动专注模式"

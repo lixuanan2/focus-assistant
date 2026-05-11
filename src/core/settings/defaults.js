@@ -20,6 +20,7 @@ export const DEFAULT_SETTINGS = {
       id: DEFAULT_GROUP_ID,
       name: "默认组",
       modes: {
+        permanent: false,
         manual: true,
         schedule: true,
         pomodoro: true
@@ -53,7 +54,8 @@ export const DEFAULT_SETTINGS = {
     breakMinutes: 5
   },
   bypass: {
-    defaultDurationMinutes: 5
+    defaultDurationMinutes: 5,
+    allowFromBlockedPage: true
   },
   recovery: {
     focusTask: "完成当前最重要的一项任务",

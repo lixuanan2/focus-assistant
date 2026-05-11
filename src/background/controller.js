@@ -1,10 +1,10 @@
 import { buildRedirectUrl, redirectMatchingTabs, shouldRedirectUrl } from "../core/blocking/redirect.js";
+import { FOCUS_MESSAGE_TYPES } from "../core/runtime/messages.js";
 import { clearBypassSession, startBypassSession } from "../core/modes/bypass.js";
 import { getFocusState } from "../core/modes/focus-state.js";
 import {
   advancePomodoroSession,
-  startPomodoroSession,
-  stopPomodoroSession
+  startPomodoroSession
 } from "../core/modes/pomodoro.js";
 import { getScheduleState } from "../core/modes/schedule.js";
 import {
@@ -91,12 +91,12 @@ export function createBackgroundController() {
 
     switch (alarm.name) {
       case ALARM_NAMES.pomodoroPhaseEnd:
-        currentRuntimeState = advancePomodoroSession(currentSettings, currentRuntimeState);
-        currentRuntimeState = await saveRuntimeState(currentRuntimeState);
+        await persistRuntimeState(
+          advancePomodoroSession(currentSettings, currentRuntimeState)
+        );
         return;
       case ALARM_NAMES.bypassExpire:
-        currentRuntimeState = clearBypassSession(currentRuntimeState);
-        currentRuntimeState = await saveRuntimeState(currentRuntimeState);
+        await persistRuntimeState(clearBypassSession(currentRuntimeState));
         return;
       case ALARM_NAMES.scheduleTick:
         await reconcileState();
@@ -110,24 +110,20 @@ export function createBackgroundController() {
     await stateReady;
 
     switch (message?.type) {
-      case "focus:get-state":
+      case FOCUS_MESSAGE_TYPES.getState:
         return buildStatePayload();
-      case "focus:start-pomodoro":
-        currentRuntimeState = startPomodoroSession(currentSettings, currentRuntimeState);
-        currentRuntimeState = await saveRuntimeState(currentRuntimeState);
-        return buildStatePayload();
-      case "focus:stop-pomodoro":
-        currentRuntimeState = stopPomodoroSession(currentRuntimeState);
-        currentRuntimeState = await saveRuntimeState(currentRuntimeState);
-        return buildStatePayload();
-      case "focus:start-bypass":
-        currentRuntimeState = startBypassSession(currentRuntimeState, {
-          url: message.url,
-          durationMinutes: Number(message.durationMinutes) || currentSettings.bypass.defaultDurationMinutes,
-          reason: message.reason
-        });
-        currentRuntimeState = await saveRuntimeState(currentRuntimeState);
-        return buildStatePayload();
+      case FOCUS_MESSAGE_TYPES.startPomodoro:
+        return applyRuntimeMessage(() =>
+          startPomodoroSession(currentSettings, currentRuntimeState)
+        );
+      case FOCUS_MESSAGE_TYPES.startBypass:
+        return applyRuntimeMessage(() =>
+          startBypassSession(currentRuntimeState, {
+            url: message.url,
+            durationMinutes: Number(message.durationMinutes) || currentSettings.bypass.defaultDurationMinutes,
+            reason: message.reason
+          })
+        );
       default:
         throw new Error("Unsupported message type.");
     }
@@ -197,5 +193,14 @@ export function createBackgroundController() {
       runtimeState: currentRuntimeState,
       focusState: getFocusState(currentSettings, currentRuntimeState)
     };
+  }
+
+  async function applyRuntimeMessage(mutator) {
+    await persistRuntimeState(mutator());
+    return buildStatePayload();
+  }
+
+  async function persistRuntimeState(nextRuntimeState) {
+    currentRuntimeState = await saveRuntimeState(nextRuntimeState);
   }
 }

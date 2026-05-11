@@ -1,6 +1,5 @@
 import { DEFAULT_GROUP_ID } from "../../core/settings/defaults.js";
-
-const GROUP_MODES = ["manual", "schedule", "pomodoro"];
+import { GROUP_MODES, getGroupModeLabelKey } from "../../core/grouping/modes.js";
 
 export function createGroupSection({
   elements,
@@ -152,12 +151,13 @@ export function createGroupSection({
         id: nextGroupId,
         name: groupName,
         modes: {
+          permanent: false,
           manual: true,
           schedule: true,
           pomodoro: true
         }
       });
-      setSelectedGroupId(nextGroupId);
+      setSelectedGroupId(nextGroupId, true, true);
     });
 
     elements.newGroupInput.value = "";
@@ -167,7 +167,7 @@ export function createGroupSection({
 
 function getModeSummary(group, t) {
   const activeModes = GROUP_MODES.filter((mode) => group.modes[mode]).map(
-    (mode) => t(`groupMode${capitalize(mode)}`)
+    (mode) => t(getGroupModeLabelKey(mode))
   );
 
   if (activeModes.length === 0) {
@@ -183,8 +183,4 @@ function getModeSummary(group, t) {
 
 function stopPropagation(event) {
   event.stopPropagation();
-}
-
-function capitalize(value) {
-  return value.slice(0, 1).toUpperCase() + value.slice(1);
 }
